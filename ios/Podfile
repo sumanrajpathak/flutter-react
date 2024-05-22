@@ -1,0 +1,20 @@
+require_relative '../node_modules/react-native/scripts/react_native_pods'
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+platform :ios, '12.4'
+
+prepare_react_native_project!
+
+target 'Runner' do
+  use_modular_headers!
+  config = use_native_modules!
+  flags = get_default_flags()
+  use_react_native!(
+        :path => config[:reactNativePath],
+        :hermes_enabled => false,
+        :fabric_enabled => flags[:fabric_enabled],
+        :app_path => "#{Pod::Config.instance.installation_root}/.."
+      )
+  target 'RunnerTests' do
+    inherit! :search_paths
+  end
+end
